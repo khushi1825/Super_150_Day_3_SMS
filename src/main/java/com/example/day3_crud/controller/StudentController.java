@@ -5,6 +5,8 @@ import com.example.day3_crud.model.StudentModel;
 import com.example.day3_crud.service.StudentService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class StudentController {
 
@@ -17,5 +19,10 @@ public class StudentController {
     @PostMapping("/add-student")
     public StudentModel addStudent(@RequestBody StudentModel student){
         return service.addStudent(student);
+    }
+
+    @GetMapping("/students")
+    public List<StudentModel> getStudents(){
+        return service.getStudents();
     }
 }
