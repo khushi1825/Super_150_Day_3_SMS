@@ -1,8 +1,11 @@
 package com.example.day3_crud.controller;
 
 
+import com.example.day3_crud.dto.StudentRequestDto;
+import com.example.day3_crud.dto.StudentResponseDto;
 import com.example.day3_crud.model.StudentModel;
 import com.example.day3_crud.service.StudentService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,12 +20,12 @@ public class StudentController {
     }
 
     @PostMapping("/add-student")
-    public StudentModel addStudent(@RequestBody StudentModel student) {
+    public StudentResponseDto addStudent(@Valid @RequestBody StudentRequestDto student) {
         return service.addStudent(student);
     }
 
     @GetMapping("/students")
-    public List<StudentModel> getStudents() {
+    public List<StudentResponseDto> getStudents() {
         return service.getStudents();
     }
 
