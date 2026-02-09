@@ -7,19 +7,23 @@ import com.example.day3_crud.model.StudentModel;
 import com.example.day3_crud.service.StudentService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Controller;
+//import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 
+@CrossOrigin(origins="*")
 @RestController
-public class StudentController {
 
+
+public class StudentController {
     private final StudentService service;
 
     public StudentController(StudentService service) {
         this.service = service;
     }
 
-    @PostMapping("/add-student")
+    @PostMapping("/add-students")
     public StudentResponseDto addStudent(@Valid @RequestBody StudentRequestDto student) {
         return service.addStudent(student);
     }
@@ -39,5 +43,8 @@ public class StudentController {
     public void deleteStudent(@PathVariable String id) {
         service.deleteStudent(id);
     }
+
+
+
 }
 
