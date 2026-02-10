@@ -41,7 +41,8 @@ public class StudentController {
     }
 
     @GetMapping("/students")
-    public List<StudentResponseDto> getStudents() {
+    public List<StudentResponseDto> getStudents(@RequestHeader(value="Authorizion",required = false) String authHeader) {
+        checkToken(authHeader);
         return service.getStudents();
     }
 
