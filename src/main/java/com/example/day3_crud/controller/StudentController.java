@@ -5,6 +5,7 @@ import com.example.day3_crud.dto.StudentRequestDto;
 import com.example.day3_crud.dto.StudentResponseDto;
 import com.example.day3_crud.model.StudentModel;
 import com.example.day3_crud.service.StudentService;
+import com.example.day3_crud.util.JwtUtil;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
@@ -18,13 +19,24 @@ import java.util.List;
 
 public class StudentController {
     private final StudentService service;
+    private final JwtUtil jwtUtil;
 
-    public StudentController(StudentService service) {
+    public StudentController(StudentService service,JwtUtil jwtUtil) {
         this.service = service;
+        this.jwtUtil=jwtUtil;
+    }
+
+    private void checkToken(String authHeader){
+        if (authHeader ==null || authHeader.startsWith("Bearer")){
+            throw new RuntimeException("Invalid token");
+        }
+
+        String token=authHeader.substring(7);
+        jwtUtil.validateTokenAndGetEmail(token);
     }
 
     @PostMapping("/add-students")
-    public StudentResponseDto addStudent(@Valid @RequestBody StudentRequestDto student) {
+    public StudentResponseDto addStudent( @RequestHeader("Authorized") String authHeader ,@Valid @RequestBody StudentRequestDto student) {
         return service.addStudent(student);
     }
 
